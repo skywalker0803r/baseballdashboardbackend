@@ -3,4 +3,5 @@ services:
     name: my-flask-app
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: gunicorn app:app
+    startCommand: gunicorn -k eventlet -w 1 app:app
+
