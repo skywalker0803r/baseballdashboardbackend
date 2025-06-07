@@ -1,7 +1,11 @@
 services:
   - type: web
-    name: my-flask-app
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: gunicorn -k eventlet -w 1 app:app
+    name: pitcher-analyzer
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k eventlet -w 1 app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PORT
+        value: 10000
+
 

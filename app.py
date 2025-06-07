@@ -9,6 +9,8 @@ import base64
 import time
 import numpy as np
 from predict import predict_function
+import eventlet
+import eventlet.wsgi
 
 def get_landmark_vector(lm, idx):
     return np.array([lm[idx].x, lm[idx].y, lm[idx].z])  # ✅ 改為 NumPy 陣列
@@ -177,6 +179,4 @@ def handle_start_stream(data):
         emit('error', {'message': 'Invalid session_id'})
 
 if __name__ == '__main__':
-    import eventlet
-    import eventlet.wsgi
-    socketio.run(app, host='0.0.0.0', port=10000,debug=False)
+    socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
