@@ -80,7 +80,7 @@ def calc_shoulder_to_hip(lm):
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -178,5 +178,6 @@ def handle_start_stream(data):
     else:
         emit('error', {'message': 'Invalid session_id'})
 
-if __name__ == '__main__':
-    socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    socketio.run(app, host="0.0.0.0", port=port)
