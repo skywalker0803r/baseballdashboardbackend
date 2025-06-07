@@ -1,12 +1,6 @@
-# PyTorch 官方提供的 CUDA 12.6 專用套件來源
---extra-index-url https://download.pytorch.org/whl/cu126
-
-# PyTorch 相關套件（會從 PyTorch 的源下載）
 torch
 torchvision
 torchaudio
-
-# 其他套件會從預設的 PyPI 安裝（例如 mediapipe）
 mediapipe==0.10.9
 pandas==2.2.3
 requests==2.32.3

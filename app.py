@@ -78,7 +78,7 @@ def calc_shoulder_to_hip(lm):
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -137,7 +137,8 @@ def process_and_stream(video_path, sid):
             }, room=sid)
         # 影片結束
         # 預測
-        predict = predict_function(frame_landmarks,'model/model.pth')
+        valid_landmarks = [lm for lm in frame_landmarks if lm is not None]
+        predict = predict_function(valid_landmarks,'model/model.pth')
         # 打印預測結果
         socketio.emit('frame', {
             'image': frame_b64,
@@ -178,4 +179,4 @@ def handle_start_stream(data):
 if __name__ == '__main__':
     import eventlet
     import eventlet.wsgi
-    socketio.run(app, host='0.0.0.0', port=10000)
+    socketio.run(app, host='0.0.0.0', port=10000,debug=False)
