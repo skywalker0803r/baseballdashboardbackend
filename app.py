@@ -178,6 +178,6 @@ def handle_start_stream(data):
         emit('error', {'message': 'Invalid session_id'})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 443))
     print(f"⚡ Starting server on http://0.0.0.0:{port}")
     socketio.run(app, host="0.0.0.0", port=port, debug=True)
