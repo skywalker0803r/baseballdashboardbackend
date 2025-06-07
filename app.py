@@ -1,3 +1,5 @@
+import eventlet
+eventlet.monkey_patch()
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
@@ -6,11 +8,8 @@ import uuid
 import cv2
 import mediapipe as mp
 import base64
-import time
 import numpy as np
 from predict import predict_function
-import eventlet
-import eventlet.wsgi
 
 def get_landmark_vector(lm, idx):
     return np.array([lm[idx].x, lm[idx].y, lm[idx].z])  # ✅ 改為 NumPy 陣列
